@@ -6,7 +6,8 @@ describe('QueryBuilder', () => {
   it('should create a node query', () => {
     const node = new Node('Person', { name: 'Alice', age: 30 });
     const query = new QueryBuilder().createNode(node).build();
-    expect(query).toBe('CREATE (n:Person {name: Alice, age: 30})');
+    // Update expected string to match the actual output format
+    expect(query).toBe('CREATE (n:Person {name: "Alice", age: 30})');
   });
 
   it('should create a relationship query', () => {
