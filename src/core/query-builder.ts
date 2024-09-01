@@ -215,8 +215,15 @@ export class QueryBuilder {
   async execute(): Promise<unknown> {
     const { query, parameters } = this.build();
     if (!this.dbService) {
-      throw new Error("DatabaseService is not initialized.");
+      throw new Error(
+        "DatabaseService is not provided. Cannot execute the query.",
+      );
     }
-    return await this.dbService.executeQuery(query, parameters); // Use DatabaseService to execute the query
+    try {
+      return await this.dbService.executeQuery(query, parameters);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      throw new Error(`Failed to execute query: ${error.message}`);
+    }
   }
 }

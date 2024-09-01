@@ -1,4 +1,4 @@
-import { NodeRepository } from "domain/repository/node-repository";
+import { NodeRepository } from "../domain/repository/node-repository";
 import { Node } from "../domain/node";
 import neo4j, { Driver, Session } from "neo4j-driver";
 
@@ -20,6 +20,7 @@ export class Neo4jNodeRepository implements NodeRepository {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(id: string): Promise<Node | null> {
     // Implement method to find node by ID
     return null;

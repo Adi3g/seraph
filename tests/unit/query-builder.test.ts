@@ -174,3 +174,25 @@ describe("QueryBuilder with DatabaseService", () => {
     expect(result).toEqual(mockResult);
   });
 });
+
+describe("QueryBuilder Build Only", () => {
+  let queryBuilder: QueryBuilder;
+
+  beforeEach(() => {
+    queryBuilder = new QueryBuilder(); // No DatabaseService provided
+  });
+
+  it("should build a query without executing", () => {
+    queryBuilder.match("(n:Person)").where("n.age > 30").return("n.name");
+    const { query, parameters } = queryBuilder.build();
+    expect(query).toBe("MATCH (n:Person) WHERE n.age > 30 RETURN n.name");
+    expect(parameters).toEqual({});
+  });
+
+  it("should throw an error when executing without DatabaseService", async () => {
+    queryBuilder.match("(n:Person)").where("n.age > 30").return("n.name");
+    await expect(queryBuilder.execute()).rejects.toThrow(
+      "DatabaseService is not provided. Cannot execute the query.",
+    );
+  });
+});
