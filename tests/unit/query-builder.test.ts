@@ -112,3 +112,15 @@ describe("QueryBuilder with Aggregation Functions", () => {
     );
   });
 });
+
+describe("QueryBuilder with Path Queries", () => {
+  it("should add a path query with variable length relationship", () => {
+    const query = new QueryBuilder()
+      .matchPath("(a:Person)-[:KNOWS*1..5]->(b:Person)")
+      .return("b")
+      .build();
+    expect(query.query).toBe(
+      "MATCH (a:Person)-[:KNOWS*1..5]->(b:Person) RETURN b",
+    );
+  });
+});

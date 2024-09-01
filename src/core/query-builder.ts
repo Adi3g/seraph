@@ -162,4 +162,14 @@ export class QueryBuilder {
     this.query.push(`${functionType}(${field}) AS ${alias}`);
     return this;
   }
+
+  /**
+   * Adds a MATCH clause for paths with variable length relationships.
+   * @param pattern The pattern with variable length (e.g., -[:RELTYPE*1..5]->).
+   * @returns The current instance of QueryBuilder.
+   */
+  matchPath(pattern: string): QueryBuilder {
+    this.query.push(`MATCH ${pattern}`);
+    return this;
+  }
 }
