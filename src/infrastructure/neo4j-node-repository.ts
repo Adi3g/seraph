@@ -1,7 +1,5 @@
-// src/infrastructure/Neo4jNodeRepository.ts
-
-import { NodeRepository } from '../domain/repository/NodeRepository';
-import { Node } from '../domain/Node';
+import { NodeRepository } from 'domain/repository/node-repository';
+import { Node } from '../domain/node';
 import neo4j, { Driver, Session } from 'neo4j-driver';
 
 export class Neo4jNodeRepository implements NodeRepository {

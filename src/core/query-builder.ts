@@ -1,5 +1,5 @@
-import { Node } from '../domain/Node';
-import { Relationship } from '../domain/Relationship';
+import { Node } from '../domain/node';
+import { Relationship } from '../domain/relationship';
 
 /**
  * QueryBuilder is responsible for constructing Neo4j queries using a fluent API.
@@ -14,11 +14,8 @@ export class QueryBuilder {
    */
   createNode(node: Node): QueryBuilder {
     const { label, properties } = node;
-    // Convert properties to Cypher format
-    const props = Object.entries(properties)
-      .map(([key, value]) => `${key}: ${typeof value === 'string' ? `"${value}"` : value}`)
-      .join(', ');
-    this.query.push(`CREATE (n:${label} {${props}})`);
+    const props = JSON.stringify(properties).replace(/"(\w+)"\s*:/g, '$1:');
+    this.query.push(`CREATE (n:${label} ${props})`);
     return this;
   }
 

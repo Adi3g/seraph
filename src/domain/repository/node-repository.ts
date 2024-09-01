@@ -1,6 +1,4 @@
-// src/domain/repository/NodeRepository.ts
-
-import { Node } from '../Node';
+import { Node } from '../node';
 
 export interface NodeRepository {
   create(node: Node): Promise<void>;
