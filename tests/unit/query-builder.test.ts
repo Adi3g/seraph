@@ -92,3 +92,23 @@ describe("QueryBuilder with MERGE", () => {
     expect(query.query).toBe("MERGE (n:Person {name: $name})");
   });
 });
+
+describe("QueryBuilder with Aggregation Functions", () => {
+  it("should add a COUNT aggregation to the query", () => {
+    const query = new QueryBuilder()
+      .match("(n:Person)")
+      .aggregate("COUNT", "n", "total")
+      .build();
+    expect(query.query).toBe("MATCH (n:Person) COUNT(n) AS total");
+  });
+
+  it("should add a SUM aggregation to the query", () => {
+    const query = new QueryBuilder()
+      .match("(n:Transaction)")
+      .aggregate("SUM", "n.amount", "totalAmount")
+      .build();
+    expect(query.query).toBe(
+      "MATCH (n:Transaction) SUM(n.amount) AS totalAmount",
+    );
+  });
+});

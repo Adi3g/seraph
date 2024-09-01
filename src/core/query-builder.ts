@@ -6,7 +6,7 @@ import { Relationship } from "../domain/relationship";
  */
 export class QueryBuilder {
   private query: string[] = [];
-  private parameters: Record<string, any> = {};
+  private parameters: Record<string, unknown> = {};
 
   /**
    * Creates a new node in the graph.
@@ -16,7 +16,8 @@ export class QueryBuilder {
   createNode(node: Node): QueryBuilder {
     const { label, properties } = node;
     const props = Object.entries(properties)
-      .map(([key, value]) => `${key}: $${key}`)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .map(([key, _value]) => `${key}: $${key}`)
       .join(", ");
     this.parameters = { ...this.parameters, ...properties };
     this.query.push(`CREATE (n:${label} {${props}})`);
@@ -88,7 +89,7 @@ export class QueryBuilder {
    * Builds the final Cypher query string along with parameters.
    * @returns An object containing the constructed Cypher query and its parameters.
    */
-  build(): { query: string; parameters: Record<string, any> } {
+  build(): { query: string; parameters: Record<string, unknown> } {
     return { query: this.query.join(" "), parameters: this.parameters };
   }
   /**
@@ -97,7 +98,10 @@ export class QueryBuilder {
    * @param params The parameters for the query.
    * @returns The current instance of QueryBuilder.
    */
-  matchWithParams(pattern: string, params: Record<string, any>): QueryBuilder {
+  matchWithParams(
+    pattern: string,
+    params: Record<string, unknown>,
+  ): QueryBuilder {
     this.query.push(`MATCH ${pattern}`);
     this.addParameters(params);
     return this;
@@ -107,7 +111,7 @@ export class QueryBuilder {
    * Adds parameters to the query.
    * @param params Key-value pairs for query parameters.
    */
-  private addParameters(params: Record<string, any>): void {
+  private addParameters(params: Record<string, unknown>): void {
     // Store parameters for later use with the query execution
     this.parameters = { ...this.parameters, ...params };
   }
@@ -140,6 +144,22 @@ export class QueryBuilder {
    */
   merge(pattern: string): QueryBuilder {
     this.query.push(`MERGE ${pattern}`);
+    return this;
+  }
+
+  /**
+   * Adds an aggregation function to the query.
+   * @param functionType The aggregation function (e.g., COUNT, SUM).
+   * @param field The field to apply the aggregation function to.
+   * @param alias Alias for the result of the aggregation.
+   * @returns The current instance of QueryBuilder.
+   */
+  aggregate(
+    functionType: "COUNT" | "SUM" | "AVG" | "MIN" | "MAX",
+    field: string,
+    alias: string,
+  ): QueryBuilder {
+    this.query.push(`${functionType}(${field}) AS ${alias}`);
     return this;
   }
 }
