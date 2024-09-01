@@ -111,4 +111,14 @@ export class QueryBuilder {
     // Store parameters for later use with the query execution
     this.parameters = { ...this.parameters, ...params };
   }
+
+  /**
+   * Adds an OPTIONAL MATCH clause to the query.
+   * @param pattern The pattern to optionally match.
+   * @returns The current instance of QueryBuilder.
+   */
+  optionalMatch(pattern: string): QueryBuilder {
+    this.query.push(`OPTIONAL MATCH ${pattern}`);
+    return this;
+  }
 }

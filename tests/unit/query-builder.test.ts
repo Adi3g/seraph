@@ -63,3 +63,15 @@ describe("QueryBuilder with Parameterized Queries", () => {
     expect(result.parameters).toEqual({ name: "Alice", age: 30 });
   });
 });
+
+describe("QueryBuilder with OPTIONAL MATCH", () => {
+  it("should add an OPTIONAL MATCH clause to the query", () => {
+    const query = new QueryBuilder()
+      .optionalMatch("(n:Person {name: $name})")
+      .return("n")
+      .build();
+    expect(query.query).toBe(
+      "OPTIONAL MATCH (n:Person {name: $name}) RETURN n",
+    );
+  });
+});
