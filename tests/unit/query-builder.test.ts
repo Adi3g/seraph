@@ -1,6 +1,7 @@
 import { QueryBuilder } from "../../src/core/query-builder";
 import { Node } from "../../src/domain/node";
 import { Relationship } from "../../src/domain/relationship";
+import { DatabaseService } from "../../src/infrastructure/database-service";
 
 describe("QueryBuilder", () => {
   it("should create a node query", () => {
@@ -136,5 +137,40 @@ describe("QueryBuilder with Grouping and Aggregation", () => {
     expect(query.query).toBe(
       "MATCH (n:Person) WITH n.age COUNT(n) AS total RETURN n.age, total",
     );
+  });
+});
+
+jest.mock("../../src/infrastructure/database-service"); // Mock the DatabaseService
+
+const MockedDatabaseService = DatabaseService as jest.MockedClass<
+  typeof DatabaseService
+>;
+
+describe("QueryBuilder with DatabaseService", () => {
+  let dbService: DatabaseService;
+  let queryBuilder: QueryBuilder;
+
+  beforeEach(() => {
+    dbService = new MockedDatabaseService(
+      "bolt://localhost:7687",
+      "neo4j",
+      "password",
+    );
+    queryBuilder = new QueryBuilder(dbService);
+  });
+
+  it("should execute a query using the DatabaseService", async () => {
+    const mockResult = [{ name: "Alice", age: 30 }];
+    dbService.executeQuery = jest.fn().mockResolvedValue(mockResult); // Mock executeQuery
+
+    const node = new Node("Person", { name: "Alice", age: 30 });
+    queryBuilder.createNode(node);
+    const result = await queryBuilder.execute();
+
+    expect(dbService.executeQuery).toHaveBeenCalledWith(
+      "CREATE (n:Person {name: $name, age: $age})",
+      { name: "Alice", age: 30 },
+    );
+    expect(result).toEqual(mockResult);
   });
 });

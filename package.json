@@ -26,7 +26,8 @@
     ]
   },
   "dependencies": {
-    "neo4j-driver": "^5.4.0"
+    "neo4j-driver": "^5.4.0",
+    "winston": "^3.14.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",

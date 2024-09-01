@@ -1,12 +1,21 @@
 import { Node } from "../domain/node";
 import { Relationship } from "../domain/relationship";
-
+import { DatabaseService } from "../infrastructure/database-service";
 /**
  * QueryBuilder is responsible for constructing Neo4j queries using a fluent API.
  */
 export class QueryBuilder {
   private query: string[] = [];
   private parameters: Record<string, unknown> = {};
+  private dbService: DatabaseService | null;
+
+  /**
+   * Initializes a new instance of the QueryBuilder class.
+   * @param dbService An instance of DatabaseService for executing queries.
+   */
+  constructor(dbService: DatabaseService | null = null) {
+    this.dbService = dbService; // Initialize DatabaseService
+  }
 
   /**
    * Creates a new node in the graph.
@@ -197,5 +206,17 @@ export class QueryBuilder {
   ): QueryBuilder {
     this.query.push(`${functionType}(${field}) AS ${alias}`);
     return this;
+  }
+
+  /**
+   * Executes the built query using the DatabaseService.
+   * @returns The result of the query execution.
+   */
+  async execute(): Promise<unknown> {
+    const { query, parameters } = this.build();
+    if (!this.dbService) {
+      throw new Error("DatabaseService is not initialized.");
+    }
+    return await this.dbService.executeQuery(query, parameters); // Use DatabaseService to execute the query
   }
 }
