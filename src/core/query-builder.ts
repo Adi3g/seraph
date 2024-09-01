@@ -261,4 +261,30 @@ export class QueryBuilder {
     this.query.push(`DROP INDEX ON :${label}(${property})`);
     return this;
   }
+
+  /**
+   * Adds a CREATE CONSTRAINT clause for the specified label and property.
+   * @param label The label of the node to constrain.
+   * @param property The property to constrain.
+   * @returns The current instance of QueryBuilder.
+   */
+  createConstraint(label: string, property: string): QueryBuilder {
+    this.query.push(
+      `CREATE CONSTRAINT ON (n:${label}) ASSERT n.${property} IS UNIQUE`,
+    );
+    return this;
+  }
+
+  /**
+   * Adds a DROP CONSTRAINT clause for the specified label and property.
+   * @param label The label of the node to drop the constraint from.
+   * @param property The property to drop the constraint from.
+   * @returns The current instance of QueryBuilder.
+   */
+  dropConstraint(label: string, property: string): QueryBuilder {
+    this.query.push(
+      `DROP CONSTRAINT ON (n:${label}) ASSERT n.${property} IS UNIQUE`,
+    );
+    return this;
+  }
 }
