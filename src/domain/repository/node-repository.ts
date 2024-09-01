@@ -1,4 +1,4 @@
-import { Node } from '../node';
+import { Node } from "../node";
 
 export interface NodeRepository {
   create(node: Node): Promise<void>;
