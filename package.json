@@ -13,7 +13,7 @@
     "format:check": "prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
     "clean": "rm -rf dist coverage docs",
     "docs": "typedoc",
-    "prepare": "npm run clean && npm run build && npm run docs",
+    "prepare": "npm run clean && npm run build",
     "ci": "npm run lint:check && npm run format:check && npm run test"
   },
   "dependencies": {
