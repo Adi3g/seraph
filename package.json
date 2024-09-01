@@ -7,16 +7,16 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "lint": "eslint 'src/**/*.ts' --fix",
     "lint:check": "eslint 'src/**/*.ts'",
-    "format": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
     "clean": "rm -rf dist coverage docs",
     "docs": "typedoc",
-    "prepare": "husky install",
-    "ci": "npm run lint:check && npm run format:check && npm run test"
+    "ci": "npm run lint:check && npm run format:check && npm run test",
+    "test": "jest --coverage",
+    "lint": "eslint 'src/**/*.ts' --fix",
+    "format": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.ts": [
