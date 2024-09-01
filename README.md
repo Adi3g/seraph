@@ -38,8 +38,7 @@ Here is a basic example of how to use Seraph to create a simple query:
 ### Creating Nodes
 
 ```typescript
-import { QueryBuilder } from 'seraph';
-import { Node } from 'seraph/src/domain/Node';
+import { QueryBuilder, Node } from 'seraph';
 
 const personNode = new Node('Person', { name: 'Alice', age: 30 });
 const query = new QueryBuilder()
@@ -53,8 +52,7 @@ console.log(query);
 ### Creating Relationships
 
 ```typescript
-import { QueryBuilder } from 'seraph';
-import { Relationship } from 'seraph/src/domain/Relationship';
+import { QueryBuilder, Relationship } from 'seraph';
 
 const relationship = new Relationship('FRIEND', 'n', 'm');
 const query = new QueryBuilder()
