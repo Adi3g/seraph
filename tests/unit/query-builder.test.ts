@@ -196,3 +196,23 @@ describe("QueryBuilder Build Only", () => {
     );
   });
 });
+
+describe("QueryBuilder with Nested Queries", () => {
+  it("should add a nested subquery", () => {
+    const subquery = new QueryBuilder()
+      .match("(m:Movie)")
+      .where("m.released > 2000")
+      .return("m.title");
+
+    const queryBuilder = new QueryBuilder()
+      .match("(n:Person)")
+      .subquery(subquery, "recentMovies")
+      .return("n.name, recentMovies");
+
+    const { query, parameters } = queryBuilder.build();
+    expect(query).toBe(
+      "MATCH (n:Person) CALL { MATCH (m:Movie) WHERE m.released > 2000 RETURN m.title } AS recentMovies RETURN n.name, recentMovies",
+    );
+    expect(parameters).toEqual({});
+  });
+});

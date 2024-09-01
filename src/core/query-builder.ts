@@ -226,4 +226,17 @@ export class QueryBuilder {
       throw new Error(`Failed to execute query: ${error.message}`);
     }
   }
+
+  /**
+   * Adds a nested subquery within the current query context.
+   * @param subquery The subquery builder instance.
+   * @param alias The alias for the subquery result.
+   * @returns The current instance of QueryBuilder.
+   */
+  subquery(subquery: QueryBuilder, alias: string): QueryBuilder {
+    const { query, parameters } = subquery.build();
+    this.query.push(`CALL { ${query} } AS ${alias}`);
+    this.parameters = { ...this.parameters, ...parameters };
+    return this;
+  }
 }
