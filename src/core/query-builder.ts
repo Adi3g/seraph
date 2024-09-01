@@ -121,4 +121,15 @@ export class QueryBuilder {
     this.query.push(`OPTIONAL MATCH ${pattern}`);
     return this;
   }
+
+  /**
+   * Adds an UNWIND clause to the query to expand lists into rows.
+   * @param list The list to unwind.
+   * @param alias The alias for each element of the list.
+   * @returns The current instance of QueryBuilder.
+   */
+  unwind(list: string, alias: string): QueryBuilder {
+    this.query.push(`UNWIND ${list} AS ${alias}`);
+    return this;
+  }
 }

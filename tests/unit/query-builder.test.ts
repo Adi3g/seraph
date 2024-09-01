@@ -75,3 +75,13 @@ describe("QueryBuilder with OPTIONAL MATCH", () => {
     );
   });
 });
+
+describe("QueryBuilder with UNWIND", () => {
+  it("should add an UNWIND clause to the query", () => {
+    const query = new QueryBuilder()
+      .unwind("$names", "name")
+      .return("name")
+      .build();
+    expect(query.query).toBe("UNWIND $names AS name RETURN name");
+  });
+});
