@@ -239,4 +239,26 @@ export class QueryBuilder {
     this.parameters = { ...this.parameters, ...parameters };
     return this;
   }
+
+  /**
+   * Adds a CREATE INDEX clause for the specified label and property.
+   * @param label The label of the node to index.
+   * @param property The property to index.
+   * @returns The current instance of QueryBuilder.
+   */
+  createIndex(label: string, property: string): QueryBuilder {
+    this.query.push(`CREATE INDEX ON :${label}(${property})`);
+    return this;
+  }
+
+  /**
+   * Adds a DROP INDEX clause for the specified label and property.
+   * @param label The label of the node to drop the index from.
+   * @param property The property to drop the index from.
+   * @returns The current instance of QueryBuilder.
+   */
+  dropIndex(label: string, property: string): QueryBuilder {
+    this.query.push(`DROP INDEX ON :${label}(${property})`);
+    return this;
+  }
 }
