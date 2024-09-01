@@ -1,8 +1,6 @@
-// src/infrastructure/Neo4jNodeRepository.ts
-
-import { NodeRepository } from '../domain/repository/NodeRepository';
-import { Node } from '../domain/Node';
-import neo4j, { Driver, Session } from 'neo4j-driver';
+import { NodeRepository } from "../domain/repository/node-repository";
+import { Node } from "../domain/node";
+import neo4j, { Driver, Session } from "neo4j-driver";
 
 export class Neo4jNodeRepository implements NodeRepository {
   private driver: Driver;
@@ -15,13 +13,14 @@ export class Neo4jNodeRepository implements NodeRepository {
     const session: Session = this.driver.session();
     try {
       const { label, properties } = node;
-      const props = JSON.stringify(properties).replace(/"(\w+)"\s*:/g, '$1:');
+      const props = JSON.stringify(properties).replace(/"(\w+)"\s*:/g, "$1:");
       await session.run(`CREATE (n:${label} ${props})`);
     } finally {
       await session.close();
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async findById(id: string): Promise<Node | null> {
     // Implement method to find node by ID
     return null;
