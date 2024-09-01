@@ -2,6 +2,7 @@
   "name": "seraph",
   "version": "1.0.0",
   "description": "A TypeScript-based query builder for Neo4j.",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
@@ -29,7 +30,7 @@
     "jest": "^29.0.0",
     "prettier": "^3.0.0",
     "ts-jest": "^29.0.0",
-    "typedoc": "^0.23.0",
+    "typedoc": "^0.23.28",
     "typescript": "^5.0.0"
   },
   "keywords": [
