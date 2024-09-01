@@ -132,4 +132,14 @@ export class QueryBuilder {
     this.query.push(`UNWIND ${list} AS ${alias}`);
     return this;
   }
+
+  /**
+   * Adds a MERGE clause to the query.
+   * @param pattern The pattern to merge.
+   * @returns The current instance of QueryBuilder.
+   */
+  merge(pattern: string): QueryBuilder {
+    this.query.push(`MERGE ${pattern}`);
+    return this;
+  }
 }

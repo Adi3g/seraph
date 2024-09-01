@@ -85,3 +85,10 @@ describe("QueryBuilder with UNWIND", () => {
     expect(query.query).toBe("UNWIND $names AS name RETURN name");
   });
 });
+
+describe("QueryBuilder with MERGE", () => {
+  it("should add a MERGE clause to the query", () => {
+    const query = new QueryBuilder().merge("(n:Person {name: $name})").build();
+    expect(query.query).toBe("MERGE (n:Person {name: $name})");
+  });
+});
