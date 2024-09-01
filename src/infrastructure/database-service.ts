@@ -4,6 +4,7 @@ import logger from "../services/logger";
 export class DatabaseService {
   private driver: Driver;
   private cache: Map<string, any>;
+  private batchSize: number;
 
   /**
    * Initializes a new instance of the DatabaseService class.
@@ -11,9 +12,10 @@ export class DatabaseService {
    * @param user The username for the Neo4j database.
    * @param password The password for the Neo4j database.
    */
-  constructor(uri: string, user: string, password: string) {
+  constructor(uri: string, user: string, password: string, batchSize = 100) {
     this.driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
     this.cache = new Map(); // Initialize an in-memory cache
+    this.batchSize = batchSize; // Set default batch size
   }
 
   /**
@@ -46,6 +48,40 @@ export class DatabaseService {
     } catch (error: any) {
       logger.error(`Failed to execute query: ${error.message}`);
       throw new Error(`Failed to execute query: ${error.message}`);
+    } finally {
+      await session.close();
+    }
+  }
+  /**
+   * Executes queries in batches to optimize performance for large-scale operations.
+   * @param queries Array of query objects containing the query and parameters.
+   */
+  async executeBatch(
+    queries: { query: string; parameters: Record<string, any> }[],
+  ): Promise<void> {
+    const session: Session = this.driver.session();
+
+    try {
+      for (let i = 0; i < queries.length; i += this.batchSize) {
+        const batch = queries.slice(i, i + this.batchSize);
+        const tx = session.beginTransaction();
+
+        try {
+          for (const { query, parameters } of batch) {
+            await tx.run(query, parameters);
+          }
+          await tx.commit();
+          logger.info(
+            `Batch ${i / this.batchSize + 1} committed successfully.`,
+          );
+        } catch (error: any) {
+          await tx.rollback();
+          logger.error(
+            `Batch ${i / this.batchSize + 1} failed and rolled back: ${error.message}`,
+          );
+          throw new Error(`Batch processing failed: ${error.message}`);
+        }
+      }
     } finally {
       await session.close();
     }
