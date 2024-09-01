@@ -124,3 +124,17 @@ describe("QueryBuilder with Path Queries", () => {
     );
   });
 });
+
+describe("QueryBuilder with Grouping and Aggregation", () => {
+  it("should add GROUP BY and aggregation functions to the query", () => {
+    const query = new QueryBuilder()
+      .match("(n:Person)")
+      .groupBy("n.age")
+      .aggregateWithGroup("COUNT", "n", "total")
+      .return("n.age, total")
+      .build();
+    expect(query.query).toBe(
+      "MATCH (n:Person) WITH n.age COUNT(n) AS total RETURN n.age, total",
+    );
+  });
+});

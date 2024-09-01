@@ -172,4 +172,30 @@ export class QueryBuilder {
     this.query.push(`MATCH ${pattern}`);
     return this;
   }
+
+  /**
+   * Adds a GROUP BY clause to the query.
+   * @param field The field to group by.
+   * @returns The current instance of QueryBuilder.
+   */
+  groupBy(field: string): QueryBuilder {
+    this.query.push(`WITH ${field}`);
+    return this;
+  }
+
+  /**
+   * Adds an aggregation function with grouping to the query.
+   * @param functionType The aggregation function (e.g., COUNT, SUM).
+   * @param field The field to apply the aggregation function to.
+   * @param alias Alias for the result of the aggregation.
+   * @returns The current instance of QueryBuilder.
+   */
+  aggregateWithGroup(
+    functionType: "COUNT" | "SUM" | "AVG" | "MIN" | "MAX",
+    field: string,
+    alias: string,
+  ): QueryBuilder {
+    this.query.push(`${functionType}(${field}) AS ${alias}`);
+    return this;
+  }
 }
