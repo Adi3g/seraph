@@ -1,0 +1,143 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>seraph - v1.0.0</title><meta name="description" content="Documentation for seraph - v1.0.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">seraph - v1.0.0</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>seraph - v1.0.0</h2></div>
+<div class="tsd-panel tsd-typography">
+<a href="#seraph" id="seraph" style="color: inherit; text-decoration: none;">
+  <h1>Seraph</h1>
+</a>
+<p><strong>Seraph</strong> is an open-source, TypeScript-based query builder for Neo4j that simplifies the construction of Cypher queries through a fluent API. Designed with Domain-Driven Design (DDD) principles, Seraph offers a type-safe and intuitive way to build queries, making it easier for developers to work with Neo4j.</p>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h2>Features</h2>
+</a>
+<ul>
+<li><strong>Fluent API:</strong> Easily build complex Neo4j queries using a chainable, fluent interface.</li>
+<li><strong>Type Safety:</strong> Leverages TypeScript for robust type-checking, reducing errors and improving developer productivity.</li>
+<li><strong>Modular Design:</strong> Built with DDD principles, ensuring clear separation of concerns and a maintainable codebase.</li>
+<li><strong>Extensible:</strong> Designed to be extended with custom functions, relationships, and more advanced Cypher query patterns.</li>
+</ul>
+
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h2>Getting Started</h2>
+</a>
+
+<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+  <h3>Prerequisites</h3>
+</a>
+<ul>
+<li>Node.js (version 14 or above)</li>
+<li>Neo4j database (version 4.x or above)</li>
+<li>npm or yarn for package management</li>
+</ul>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h3>Installation</h3>
+</a>
+<p>To install Seraph, you can use npm:</p>
+<pre><code class="language-bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">seraph</span>
+</code></pre>
+<p>Or with yarn:</p>
+<pre><code class="language-bash"><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">seraph</span>
+</code></pre>
+
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p>Here is a basic example of how to use Seraph to create a simple query:</p>
+
+<a href="#creating-nodes" id="creating-nodes" style="color: inherit; text-decoration: none;">
+  <h3>Creating Nodes</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">QueryBuilder</span><span class="hl-1">, </span><span class="hl-4">Node</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;seraph&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">personNode</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">Node</span><span class="hl-1">(</span><span class="hl-2">&#39;Person&#39;</span><span class="hl-1">, { </span><span class="hl-4">name:</span><span class="hl-1"> </span><span class="hl-2">&#39;Alice&#39;</span><span class="hl-1">, </span><span class="hl-4">age:</span><span class="hl-1"> </span><span class="hl-7">30</span><span class="hl-1"> });</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">query</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">QueryBuilder</span><span class="hl-1">()</span><br/><span class="hl-1">  .</span><span class="hl-0">createNode</span><span class="hl-1">(</span><span class="hl-4">personNode</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">build</span><span class="hl-1">();</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">query</span><span class="hl-1">); </span><br/><span class="hl-8">// Outputs: CREATE (n:Person {name: Alice, age: 30})</span>
+</code></pre>
+
+<a href="#creating-relationships" id="creating-relationships" style="color: inherit; text-decoration: none;">
+  <h3>Creating Relationships</h3>
+</a>
+<pre><code class="language-typescript"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">QueryBuilder</span><span class="hl-1">, </span><span class="hl-4">Relationship</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;seraph&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">relationship</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">Relationship</span><span class="hl-1">(</span><span class="hl-2">&#39;FRIEND&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;n&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;m&#39;</span><span class="hl-1">);</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">query</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">QueryBuilder</span><span class="hl-1">()</span><br/><span class="hl-1">  .</span><span class="hl-0">createRelationship</span><span class="hl-1">(</span><span class="hl-4">relationship</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">build</span><span class="hl-1">();</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">query</span><span class="hl-1">); </span><br/><span class="hl-8">// Outputs: CREATE (n)-[:FRIEND]-&gt;(m)</span>
+</code></pre>
+
+<a href="#project-structure" id="project-structure" style="color: inherit; text-decoration: none;">
+  <h2>Project Structure</h2>
+</a>
+<p>The project follows Domain-Driven Design principles, structured as follows:</p>
+<ul>
+<li><strong><code>src/core/</code>:</strong> Core application logic (query builders).</li>
+<li><strong><code>src/domain/</code>:</strong> Domain models like Nodes and Relationships.</li>
+<li><strong><code>src/infrastructure/</code>:</strong> Infrastructure-specific code, such as database interactions.</li>
+<li><strong><code>src/types/</code>:</strong> TypeScript types and interfaces.</li>
+<li><strong><code>src/utils/</code>:</strong> Utility functions.</li>
+<li><strong><code>tests/</code>:</strong> Unit and integration tests.</li>
+</ul>
+
+<a href="#running-tests" id="running-tests" style="color: inherit; text-decoration: none;">
+  <h2>Running Tests</h2>
+</a>
+<p>Seraph uses Jest for testing. To run tests, use the following command:</p>
+<pre><code class="language-bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">test</span>
+</code></pre>
+<p>This will execute all unit and integration tests, ensuring the integrity of the core functionality.</p>
+
+<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+  <h2>Contributing</h2>
+</a>
+<p>Contributions are welcome! Here’s how you can contribute:</p>
+<ol>
+<li>Fork the repository.</li>
+<li>Create a new feature branch (<code>git checkout -b feature/your-feature-name</code>).</li>
+<li>Commit your changes (<code>git commit -m &#39;Add your feature&#39;</code>).</li>
+<li>Push to the branch (<code>git push origin feature/your-feature-name</code>).</li>
+<li>Open a Pull Request.</li>
+</ol>
+
+<a href="#code-of-conduct" id="code-of-conduct" style="color: inherit; text-decoration: none;">
+  <h3>Code of Conduct</h3>
+</a>
+<p>Please read the <a href="CODE_OF_CONDUCT.md">Code of Conduct</a> to understand the expectations for participants&#39; behavior in the community.</p>
+
+<a href="#contribution-guidelines" id="contribution-guidelines" style="color: inherit; text-decoration: none;">
+  <h3>Contribution Guidelines</h3>
+</a>
+<p>Please read <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for details on the process for submitting pull requests and the coding style we use.</p>
+
+<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+  <h2>License</h2>
+</a>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">seraph -<wbr/> v1.0.0</a>
+<ul></ul></li></ul></div></details></nav>
+<nav class="tsd-navigation secondary menu-sticky"></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>
