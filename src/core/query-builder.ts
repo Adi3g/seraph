@@ -6,6 +6,7 @@ import { Relationship } from "../domain/relationship";
  */
 export class QueryBuilder {
   private query: string[] = [];
+  private parameters: Record<string, any> = {};
 
   /**
    * Creates a new node in the graph.
@@ -15,11 +16,9 @@ export class QueryBuilder {
   createNode(node: Node): QueryBuilder {
     const { label, properties } = node;
     const props = Object.entries(properties)
-      .map(
-        ([key, value]) =>
-          `${key}: ${typeof value === "string" ? `"${value}"` : value}`,
-      )
+      .map(([key, value]) => `${key}: $${key}`)
       .join(", ");
+    this.parameters = { ...this.parameters, ...properties };
     this.query.push(`CREATE (n:${label} {${props}})`);
     return this;
   }
@@ -86,10 +85,30 @@ export class QueryBuilder {
   }
 
   /**
-   * Builds the final Cypher query string.
-   * @returns The constructed Cypher query.
+   * Builds the final Cypher query string along with parameters.
+   * @returns An object containing the constructed Cypher query and its parameters.
    */
-  build(): string {
-    return this.query.join(" ");
+  build(): { query: string; parameters: Record<string, any> } {
+    return { query: this.query.join(" "), parameters: this.parameters };
+  }
+  /**
+   * Adds a parameterized MATCH clause.
+   * @param pattern The pattern to match.
+   * @param params The parameters for the query.
+   * @returns The current instance of QueryBuilder.
+   */
+  matchWithParams(pattern: string, params: Record<string, any>): QueryBuilder {
+    this.query.push(`MATCH ${pattern}`);
+    this.addParameters(params);
+    return this;
+  }
+
+  /**
+   * Adds parameters to the query.
+   * @param params Key-value pairs for query parameters.
+   */
+  private addParameters(params: Record<string, any>): void {
+    // Store parameters for later use with the query execution
+    this.parameters = { ...this.parameters, ...params };
   }
 }
