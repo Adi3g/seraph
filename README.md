@@ -22,13 +22,13 @@
 To install Seraph, you can use npm:
 
 ```bash
-npm install seraph
+npm install seraph4j
 ```
 
 Or with yarn:
 
 ```bash
-yarn add seraph
+yarn add seraph4j
 ```
 
 ## Usage
