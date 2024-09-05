@@ -216,3 +216,35 @@ describe("QueryBuilder with Nested Queries", () => {
     expect(parameters).toEqual({});
   });
 });
+
+describe("QueryBuilder with Index", () => {
+  it("should create an index on a node property", () => {
+    const queryBuilder = new QueryBuilder().createIndex("Person", "name");
+    const { query } = queryBuilder.build();
+    expect(query).toBe("CREATE INDEX ON :Person(name)");
+  });
+
+  it("should drop an index on a node property", () => {
+    const queryBuilder = new QueryBuilder().dropIndex("Person", "name");
+    const { query } = queryBuilder.build();
+    expect(query).toBe("DROP INDEX ON :Person(name)");
+  });
+});
+
+describe("QueryBuilder with Constraint Management", () => {
+  it("should create a unique constraint on a node property", () => {
+    const queryBuilder = new QueryBuilder().createConstraint("Person", "email");
+    const { query } = queryBuilder.build();
+    expect(query).toBe(
+      "CREATE CONSTRAINT ON (n:Person) ASSERT n.email IS UNIQUE",
+    );
+  });
+
+  it("should drop a unique constraint on a node property", () => {
+    const queryBuilder = new QueryBuilder().dropConstraint("Person", "email");
+    const { query } = queryBuilder.build();
+    expect(query).toBe(
+      "DROP CONSTRAINT ON (n:Person) ASSERT n.email IS UNIQUE",
+    );
+  });
+});

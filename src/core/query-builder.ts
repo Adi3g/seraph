@@ -65,6 +65,16 @@ export class QueryBuilder {
   }
 
   /**
+   * Adds a WITH clause to the query, allowing you to pass variables and aggregates between query parts.
+   * @param withClause - The variables or aggregates to pass forward.
+   * @returns The current instance of QueryBuilder for chaining.
+   */
+  with(withClause: string): QueryBuilder {
+    this.query.push(`WITH ${withClause}`);
+    return this;
+  }
+
+  /**
    * Adds a RETURN clause to the query.
    * @param items The items to return.
    * @returns The current instance of QueryBuilder.
@@ -237,6 +247,121 @@ export class QueryBuilder {
     const { query, parameters } = subquery.build();
     this.query.push(`CALL { ${query} } AS ${alias}`);
     this.parameters = { ...this.parameters, ...parameters };
+    return this;
+  }
+
+  /**
+   * Adds a CREATE INDEX clause for the specified label and property.
+   * @param label The label of the node to index.
+   * @param property The property to index.
+   * @returns The current instance of QueryBuilder.
+   */
+  createIndex(label: string, property: string): QueryBuilder {
+    this.query.push(`CREATE INDEX ON :${label}(${property})`);
+    return this;
+  }
+
+  /**
+   * Adds a DROP INDEX clause for the specified label and property.
+   * @param label The label of the node to drop the index from.
+   * @param property The property to drop the index from.
+   * @returns The current instance of QueryBuilder.
+   */
+  dropIndex(label: string, property: string): QueryBuilder {
+    this.query.push(`DROP INDEX ON :${label}(${property})`);
+    return this;
+  }
+
+  /**
+   * Adds a CREATE CONSTRAINT clause for the specified label and property.
+   * @param label The label of the node to constrain.
+   * @param property The property to constrain.
+   * @returns The current instance of QueryBuilder.
+   */
+  createConstraint(label: string, property: string): QueryBuilder {
+    this.query.push(
+      `CREATE CONSTRAINT ON (n:${label}) ASSERT n.${property} IS UNIQUE`,
+    );
+    return this;
+  }
+
+  /**
+   * Adds a DROP CONSTRAINT clause for the specified label and property.
+   * @param label The label of the node to drop the constraint from.
+   * @param property The property to drop the constraint from.
+   * @returns The current instance of QueryBuilder.
+   */
+  dropConstraint(label: string, property: string): QueryBuilder {
+    this.query.push(
+      `DROP CONSTRAINT ON (n:${label}) ASSERT n.${property} IS UNIQUE`,
+    );
+    return this;
+  }
+
+  /**
+   * Adds an ORDER BY clause to the query to sort results.
+   * @param order - The order condition, e.g., "n.name DESC".
+   * @returns The current instance of QueryBuilder for chaining.
+   */
+  orderBy(order: string): QueryBuilder {
+    this.query.push(`ORDER BY ${order}`);
+    return this;
+  }
+
+  /**
+   * Adds a FOREACH clause to iterate over a list and execute a subquery or Cypher command.
+   * @param variable - The variable name for each item in the list.
+   * @param list - The list to iterate over.
+   * @param subqueryOrCommand - Either a QueryBuilder instance representing the subquery or a direct Cypher command string.
+   * @returns The current instance of QueryBuilder for chaining.
+   */
+  forEach(
+    variable: string,
+    list: string,
+    subqueryOrCommand: QueryBuilder | string | null = null,
+  ): QueryBuilder {
+    if (typeof subqueryOrCommand === "string") {
+      this.query.push(
+        `FOREACH (${variable} IN ${list} | ${subqueryOrCommand})`,
+      );
+    } else if (subqueryOrCommand) {
+      const { query } = subqueryOrCommand.build();
+      this.query.push(`FOREACH (${variable} IN ${list} | ${query})`);
+    }
+    return this;
+  }
+
+  /**
+   * Adds a LIMIT clause to the query to restrict the number of results.
+   * @param count - The maximum number of results to return.
+   * @returns The current instance of QueryBuilder for chaining.
+   */
+  limit(count: number): QueryBuilder {
+    this.query.push(`LIMIT ${count}`);
+    return this;
+  }
+
+  /**
+   * Adds a CALL clause to invoke a procedure or function in the query.
+   * @param procedure - The name of the procedure to call.
+   * @param args - The arguments to pass to the procedure.
+   * @returns The current instance of QueryBuilder for chaining.
+   */
+  call(procedure: string, ...args: (string | number)[]): QueryBuilder {
+    const argsString = args
+      .map((arg) => (typeof arg === "string" ? arg : arg.toString()))
+      .join(", ");
+    this.query.push(`CALL ${procedure}(${argsString})`);
+    return this;
+  }
+
+  /**
+   * Adds a YIELD clause to specify the fields to return from a procedure call.
+   * @param fields - The fields to yield from the procedure.
+   * @returns The current instance of QueryBuilder for chaining.
+   */
+  yield(fields: string): QueryBuilder {
+    this.query.push(`YIELD ${fields}`);
     return this;
   }
 }
