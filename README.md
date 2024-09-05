@@ -1,12 +1,11 @@
 # Seraph
 
-**Seraph** is an open-source, TypeScript-based query builder for Neo4j that simplifies the construction of Cypher queries through a fluent API. Designed with Domain-Driven Design (DDD) principles, Seraph offers a type-safe and intuitive way to build queries, making it easier for developers to work with Neo4j.
+**Seraph** is an open-source, TypeScript-based query builder for Neo4j that simplifies the construction of Cypher queries through a fluent API. Offers a type-safe and intuitive way to build queries, making it easier for developers to work with Neo4j.
 
 ## Features
 
 - **Fluent API:** Easily build complex Neo4j queries using a chainable, fluent interface.
 - **Type Safety:** Leverages TypeScript for robust type-checking, reducing errors and improving developer productivity.
-- **Modular Design:** Built with DDD principles, ensuring clear separation of concerns and a maintainable codebase.
 - **Extensible:** Designed to be extended with custom functions, relationships, and more advanced Cypher query patterns.
 
 ## Getting Started
@@ -22,13 +21,13 @@
 To install Seraph, you can use npm:
 
 ```bash
-npm install seraph
+npm install seraph4j
 ```
 
 Or with yarn:
 
 ```bash
-yarn add seraph
+yarn add seraph4j
 ```
 
 ## Usage
